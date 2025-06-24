@@ -1,0 +1,26 @@
+# CLOUDBUILD GCP TO ARTIFACT REGISTRY
+
+substitutions:
+  _SERVICE_NAME: _SERVICE_NAME
+  _APP_FOLDER: _APP_FOLDER
+  _TAG: _TAG
+
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    id: 'Build Docker Image'
+    args:
+      - 'build'
+      - '-t'
+      - 'asia.gcr.io/$PROJECT_ID/${_SERVICE_NAME}:${_TAG}'
+      - '-f'
+      - '${_APP_FOLDER}/Dockerfile'
+      - '.'
+
+  - name: 'gcr.io/cloud-builders/docker'
+    id: 'Push Image'
+    args:
+      - 'push'
+      - 'asia.gcr.io/$PROJECT_ID/${_SERVICE_NAME}:${_TAG}'
+
+images:
+  - 'asia.gcr.io/$PROJECT_ID/${_SERVICE_NAME}:${_TAG}'

@@ -1,0 +1,102 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider     = "postgresql"
+  url          = env("DB_URI")
+  relationMode = "prisma"
+}
+
+model User {
+  id              String  @id
+  email           String  @unique
+  isEmailVerified Boolean @default(false)
+  isAdminUser     Boolean @default(false)
+  isDeleted       Boolean @default(false)
+  username        String  @unique
+  password        String?
+
+  member Member?
+}
+
+model Member {
+  id         String @id
+  userId     String @unique
+  reputation Int    @default(0)
+
+  posts        Post[]
+  postVotes    PostVote[]
+  comments     Comment[]
+  commentVotes CommentVote[]
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+}
+
+model Post {
+  id            String  @id
+  memberId      String
+  type          String
+  title         String?
+  text          String?
+  link          String?
+  slug          String
+  points        Int     @default(0)
+  totalComments Int     @default(0)
+
+  votes    PostVote[]
+  comments Comment[]
+  member   Member     @relation(fields: [memberId], references: [id])
+
+  @@index([memberId])
+}
+
+model PostVote {
+  id       String @id
+  postId   String
+  memberId String
+  type     String
+
+  post   Post   @relation(fields: [postId], references: [id])
+  member Member @relation(fields: [memberId], references: [id])
+
+  @@index([postId])
+  @@index([memberId])
+}
+
+model Comment {
+  id       String  @id
+  postId   String
+  memberId String
+  parentId String?
+  text     String
+  points   Int     @default(0)
+
+  parent   Comment?  @relation("ParentChildren", fields: [parentId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  children Comment[] @relation("ParentChildren")
+
+  votes CommentVote[]
+
+  post   Post   @relation(fields: [postId], references: [id])
+  member Member @relation(fields: [memberId], references: [id])
+
+  @@index([postId])
+  @@index([memberId])
+  @@index([parentId])
+}
+
+model CommentVote {
+  id        String @id
+  commentId String
+  memberId  String
+  type      String
+
+  comment Comment @relation(fields: [commentId], references: [id])
+  member  Member  @relation(fields: [memberId], references: [id])
+
+  @@index([commentId])
+  @@index([memberId])
+}

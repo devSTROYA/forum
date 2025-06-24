@@ -1,0 +1,113 @@
+{
+  "name": "learn",
+  "version": "0.0.1",
+  "description": "",
+  "author": {
+    "name": "Mudzia Hutama",
+    "email": "mudziahutama@gmail.com",
+    "url": "https://github.com/devSTROYA"
+  },
+  "private": true,
+  "license": "UNLICENSED",
+  "scripts": {
+    "openssl": "mkdir -p keys && openssl genpkey -algorithm RSA -out keys/private.pem -pkeyopt rsa_keygen_bits:2048 && openssl rsa -pubout -in keys/private.pem -out keys/public.pem",
+    "nest": "nest",
+    "prisma": "prisma",
+    "image": "./scripts/image.sh",
+    "build": "./scripts/build.sh",
+    "start": "./scripts/start.sh",
+    "push": "./scripts/push.sh"
+  },
+  "dependencies": {
+    "@nestjs-cls/transactional": "^2.5.0",
+    "@nestjs-cls/transactional-adapter-prisma": "^1.2.16",
+    "@nestjs/axios": "^4.0.0",
+    "@nestjs/common": "^11.0.1",
+    "@nestjs/config": "^4.0.1",
+    "@nestjs/core": "^11.0.1",
+    "@nestjs/cqrs": "^11.0.2",
+    "@nestjs/jwt": "^11.0.0",
+    "@nestjs/platform-express": "^11.0.1",
+    "@prisma/client": "^6.10.1",
+    "bcrypt": "^6.0.0",
+    "dayjs": "^1.11.13",
+    "handlebars": "^4.7.8",
+    "helmet": "^8.1.0",
+    "mime-types": "^2.1.35",
+    "nanoid": "^3.3.11",
+    "nestjs-cls": "^5.4.0",
+    "otplib": "^12.0.1",
+    "redis": "^5.5.6",
+    "reflect-metadata": "^0.2.2",
+    "resend": "^4.5.1",
+    "rxjs": "^7.8.1",
+    "shallow-equal": "^3.1.0",
+    "ua-parser-js": "^2.0.3",
+    "zod": "^3.25.67"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.2.0",
+    "@eslint/js": "^9.18.0",
+    "@nestjs/cli": "^11.0.0",
+    "@nestjs/schematics": "^11.0.0",
+    "@nestjs/testing": "^11.0.1",
+    "@swc/cli": "^0.6.0",
+    "@swc/core": "^1.10.7",
+    "@types/bcrypt": "^5.0.2",
+    "@types/express": "^5.0.0",
+    "@types/jest": "^29.5.14",
+    "@types/mime-types": "^2.1.4",
+    "@types/node": "^22.10.7",
+    "@types/supertest": "^6.0.2",
+    "eslint": "^9.18.0",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-prettier": "^5.2.2",
+    "globals": "^15.14.0",
+    "jest": "^29.7.0",
+    "prettier": "^3.4.2",
+    "prisma": "^6.10.1",
+    "run-script-webpack-plugin": "^0.2.2",
+    "source-map-support": "^0.5.21",
+    "supertest": "^7.0.0",
+    "ts-jest": "^29.2.5",
+    "ts-loader": "^9.5.2",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.20.0",
+    "webpack": "^5.98.0",
+    "webpack-node-externals": "^3.0.0"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": ".",
+    "testRegex": ".*\\.spec\\.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "collectCoverageFrom": [
+      "**/*.(t|j)s"
+    ],
+    "coverageDirectory": "./coverage",
+    "testEnvironment": "node",
+    "roots": [
+      "<rootDir>/libs/",
+      "<rootDir>/apps/"
+    ],
+    "moduleNameMapper": {
+      "^@app(|/.*)$": "<rootDir>/libs/app/src/$1",
+      "^@dto(|/.*)$": "<rootDir>/libs/dto/src/$1",
+      "^@mapper(|/.*)$": "<rootDir>/libs/mapper/src/$1",
+      "^@config(|/.*)$": "<rootDir>/libs/config/src/$1",
+      "^@core(|/.*)$": "<rootDir>/libs/core/src/$1",
+      "^@domain(|/.*)$": "<rootDir>/libs/domain/src/$1",
+      "^@event(|/.*)$": "<rootDir>/libs/event/src/$1",
+      "^@external(|/.*)$": "<rootDir>/libs/external/src/$1",
+      "^@repository(|/.*)$": "<rootDir>/libs/repository/src/$1"
+    }
+  }
+}

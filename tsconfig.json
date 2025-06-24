@@ -1,0 +1,77 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "ES2021",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "incremental": true,
+    "skipLibCheck": true,
+    "strictNullChecks": false,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "noFallthroughCasesInSwitch": false,
+    "paths": {
+      "@app": [
+        "libs/app/src"
+      ],
+      "@app/*": [
+        "libs/app/src/*"
+      ],
+      "@config": [
+        "libs/config/src"
+      ],
+      "@config/*": [
+        "libs/config/src/*"
+      ],
+      "@core": [
+        "libs/core/src"
+      ],
+      "@core/*": [
+        "libs/core/src/*"
+      ],
+      "@domain": [
+        "libs/domain/src"
+      ],
+      "@domain/*": [
+        "libs/domain/src/*"
+      ],
+      "@dto": [
+        "libs/dto/src"
+      ],
+      "@dto/*": [
+        "libs/dto/src/*"
+      ],
+      "@event": [
+        "libs/event/src"
+      ],
+      "@event/*": [
+        "libs/event/src/*"
+      ],
+      "@external": [
+        "libs/external/src"
+      ],
+      "@external/*": [
+        "libs/external/src/*"
+      ],
+      "@mapper": [
+        "libs/mapper/src"
+      ],
+      "@mapper/*": [
+        "libs/mapper/src/*"
+      ],
+      "@repository": [
+        "libs/repository/src"
+      ],
+      "@repository/*": [
+        "libs/repository/src/*"
+      ]
+    }
+  }
+}
