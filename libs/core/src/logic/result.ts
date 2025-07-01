@@ -14,6 +14,7 @@ class Failure<L> {
     return this._tag === 'Failure';
   }
 }
+
 class Success<R> {
   private readonly _tag = 'Success';
   private readonly _value: R;

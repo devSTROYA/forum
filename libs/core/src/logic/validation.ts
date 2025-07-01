@@ -1,4 +1,4 @@
-import { z } from 'zod/v4';
+import { z, ZodType } from 'zod/v4';
 import { Result, ResultType } from './result';
 
 type ValidationArgument = {
@@ -10,7 +10,7 @@ const correctTypes = ['string', 'number', 'boolean'] as const;
 type CorrectType = (typeof correctTypes)[number];
 
 export class Validation {
-  private static _parseSchema(schema: z.ZodType, argument: unknown): ResultType<void> {
+  private static _parseSchema(schema: ZodType, argument: unknown): ResultType<void> {
     const { error: parseError } = schema.safeParse(argument);
 
     return parseError ? Result.fail<void>(z.treeifyError(parseError).errors[0]) : Result.ok<void>();
