@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from 'zod/v4';
 
 export const AwsConfigEnvSchema = z.object({
   AWS_ACCESS_KEY_ID: z.string({ message: 'AWS_ACCESS_KEY_ID is required.' }),

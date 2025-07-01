@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from 'zod/v4';
 
 export const JwtEnvSchema = z.object({
   JWT_PRIVATE_KEY_PATH: z.string({ message: 'JWT_PRIVATE_KEY_PATH is required.' }),

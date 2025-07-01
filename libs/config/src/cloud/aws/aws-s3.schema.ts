@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from 'zod/v4';
 
 export const AwsS3EnvSchema = z.object({
   AWS_S3_BUCKET_NAME: z.string({ message: 'AWS_S3_BUCKET_NAME is required.' }),

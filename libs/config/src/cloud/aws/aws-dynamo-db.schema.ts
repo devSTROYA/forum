@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from 'zod/v4';
 
 export const AwsDynamoDBEnvSchema = z.object({
   AWS_DYNAMO_DB_TABLE_NAME: z.string({ message: 'AWS_DYNAMO_DB_TABLE_NAME is required.' }),
