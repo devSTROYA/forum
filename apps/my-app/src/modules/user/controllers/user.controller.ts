@@ -6,9 +6,7 @@ import { CommandBus, QueryBus } from '@nestjs/cqrs';
 
 import { CreateUserCommand, CreateUserDto, CreateUserErrors } from '../usecases/commands/createUser';
 import { DeleteUserCommand, DeleteUserErrors } from '../usecases/commands/deleteUser';
-import { LoginCommand } from '../usecases/commands/login/login.command';
-import { LoginDto } from '../usecases/commands/login/login.dto';
-import { LoginErrors } from '../usecases/commands/login/login.error';
+import { LoginCommand, LoginDto, LoginErrors } from '../usecases/commands/login';
 import { RevokeCommand, RevokeDto, RevokeErrors } from '../usecases/commands/revoke';
 import { GetCurrentUserQuery } from '../usecases/queries/getCurrentUser';
 
@@ -22,8 +20,8 @@ export class UserController extends HttpHandler {
   }
 
   @Post('registration')
-  async createUser(@Body() dto: CreateUserDto) {
-    const result = await this.commandBus.execute(new CreateUserCommand(dto));
+  async createUser(@Body() body: CreateUserDto) {
+    const result = await this.commandBus.execute(new CreateUserCommand(body));
 
     if (result.isLeft()) {
       const error = result.error;
@@ -44,8 +42,8 @@ export class UserController extends HttpHandler {
   }
 
   @Post('login')
-  async login(@Body() dto: LoginDto) {
-    const result = await this.commandBus.execute(new LoginCommand(dto));
+  async login(@Body() body: LoginDto) {
+    const result = await this.commandBus.execute(new LoginCommand(body));
 
     if (result.isLeft()) {
       const error = result.error;
@@ -66,8 +64,8 @@ export class UserController extends HttpHandler {
   }
 
   @Post('revocation')
-  async revoke(@Body() dto: RevokeDto) {
-    const result = await this.commandBus.execute(new RevokeCommand(dto));
+  async revoke(@Body() body: RevokeDto) {
+    const result = await this.commandBus.execute(new RevokeCommand(body));
 
     if (result.isLeft()) {
       const error = result.error;
@@ -77,7 +75,6 @@ export class UserController extends HttpHandler {
           throw this.notFound(message, scope);
         case RevokeErrors.InvalidOrExpiredRefreshToken:
           throw this.unauthorized(message, scope);
-          throw this.badRequest(message, scope);
         default:
           throw this.fail(message, scope);
       }
