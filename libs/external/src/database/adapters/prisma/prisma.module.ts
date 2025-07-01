@@ -1,10 +1,25 @@
+import { EnvModule, EnvService } from '@app/env';
+import { PrismaDatabaseEnv, PrismaDatabaseEnvSchema } from '@config/database';
 import { Module } from '@nestjs/common';
-import { PrismaService } from './prisma.service';
+import { PrismaClient } from '@prisma/client';
+import { PRISMA_TOKEN } from './prisma.token';
 
 @Module({
-  imports: [],
+  imports: [EnvModule.forRoot('Prisma', PrismaDatabaseEnvSchema)],
   controllers: [],
-  providers: [PrismaService],
-  exports: [PrismaService],
+  providers: [
+    {
+      inject: [EnvService],
+      provide: PRISMA_TOKEN,
+      useFactory: (envService: EnvService<PrismaDatabaseEnv>) => {
+        const client = new PrismaClient({
+          datasourceUrl: envService.get('DB_URI'),
+        });
+
+        return client;
+      },
+    },
+  ],
+  exports: [PRISMA_TOKEN],
 })
 export class PrismaModule {}
