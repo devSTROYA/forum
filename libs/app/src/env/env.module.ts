@@ -1,7 +1,7 @@
 import { AppLogger } from '@app/logger';
 import { DynamicModule, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { ZodSchema } from 'zod';
+import { ZodObject } from 'zod/v4';
 
 import { envOpts } from './env.options';
 import { EnvService } from './env.service';
@@ -10,7 +10,7 @@ const { envFilePath } = envOpts();
 
 @Module({})
 export class EnvModule {
-  static forRoot(name: string, schema: ZodSchema, isGlobal?: boolean): DynamicModule {
+  static forRoot(name: string, schema: ZodObject, isGlobal?: boolean): DynamicModule {
     const logger = new AppLogger(`${name} Env`);
 
     return {
@@ -20,19 +20,21 @@ export class EnvModule {
         ConfigModule.forRoot({
           envFilePath,
           validate: (config) => {
-            const { error, data } = schema.safeParse(config);
+            const { error: parseError, data } = schema.safeParse(config);
 
-            if (error) {
-              for (const err of error.errors) {
-                logger.error(err.message);
+            if (parseError) {
+              const errors: Array<{ message: string }> = JSON.parse(parseError.message);
+
+              for (const error of errors) {
+                logger.error(error.message);
               }
 
-              throw new Error(`Failed to validate env variables.`);
+              logger.error(`Failed to validate env variables.`);
+            } else {
+              logger.log(`Env variables validated.`);
+
+              return data;
             }
-
-            logger.log(`Env variables validated.`);
-
-            return data;
           },
         }),
       ],
