@@ -7,11 +7,12 @@ import { JwtModule } from '@nestjs/jwt';
 
 import { JwtEnv, JwtEnvSchema } from '@config/jwt';
 import { UserModule } from './modules/user';
+import { ForumModule } from './forum/forum.module';
 
 @Module({
   imports: [
     CqrsModule.forRoot(),
-    DatabaseModule.register('PRISMA'),
+    DatabaseModule.register('DRIZZLE', true),
     UserModule,
     JwtModule.registerAsync({
       global: true,
@@ -30,6 +31,7 @@ import { UserModule } from './modules/user';
         };
       },
     }),
+    ForumModule,
   ],
   controllers: [],
   providers: [],
