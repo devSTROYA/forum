@@ -1,6 +1,5 @@
 import { EnvModule, EnvService } from '@app/env';
 import { RedisDatabaseEnv, RedisDatabaseEnvSchema } from '@config/database';
-import { JwtEnvSchema } from '@config/jwt';
 import { Module } from '@nestjs/common';
 import { UserRepo } from '@repository/user';
 import { createClientPool } from 'redis';
@@ -12,7 +11,7 @@ import { userCommandHandlers } from './usecases/commands';
 import { userQueryHandlers } from './usecases/queries';
 
 @Module({
-  imports: [EnvModule.forRoot('Redis Database', RedisDatabaseEnvSchema), EnvModule.forRoot('JWT', JwtEnvSchema)],
+  imports: [EnvModule.forRoot('Redis', RedisDatabaseEnvSchema)],
   controllers: [...userControllers],
   providers: [
     ...userCommandHandlers,
