@@ -33,6 +33,9 @@ class Success<R> {
 }
 
 export type ResultType<T> = Failure<string> | Success<T>;
+export type NamespaceToUnion<T> = {
+  [K in keyof T]: T[K] extends new (...args: any[]) => any ? InstanceType<T[K]> : never;
+}[keyof T];
 type ExtractValue<T> = T extends Success<infer U> ? U : never;
 
 export const Result = {
